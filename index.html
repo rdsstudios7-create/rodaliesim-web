@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RodalieSim - Simulador de Rodalies</title>
+    <title>RodalieSim - Simulador Oficial de Rodalies de Catalunya</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -13,33 +13,33 @@
         }
 
         :root {
-            --primary: #1e40af;
-            --secondary: #3b82f6;
-            --accent: #60a5fa;
-            --dark: #0f172a;
-            --light: #f8fafc;
+            --rodalies-red: #E30613;
+            --rodalies-dark: #1a1a1a;
+            --rodalies-gray: #2d2d2d;
+            --rodalies-light: #f5f5f5;
+            --rodalies-accent: #ff1744;
+            --rodalies-orange: #FF6B00;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--rodalies-dark);
             color: #333;
             overflow-x: hidden;
         }
 
         .navbar {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--rodalies-red) 0%, #c1050f 100%);
+            padding: 1.2rem 2rem;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(227, 6, 19, 0.3);
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -47,247 +47,460 @@
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
+            font-size: 2rem;
+            font-weight: 900;
             color: white;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .logo i {
-            color: var(--accent);
+            background: white;
+            color: var(--rodalies-red);
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 1.5rem;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
         }
 
         .nav-links a {
             color: white;
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
         }
 
-        .nav-links a:hover {
-            color: var(--accent);
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: white;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: white;
             padding: 2rem;
-            margin-top: 60px;
+            margin-top: 80px;
+            background: linear-gradient(135deg, var(--rodalies-dark) 0%, var(--rodalies-gray) 50%, var(--rodalies-red) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><path d="M0,400 Q300,200 600,400 T1200,400 L1200,800 L0,800 Z" fill="%23E30613" opacity="0.1"/></svg>');
+            background-size: cover;
+            animation: wave 15s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
 
         .hero-content h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
             animation: fadeInUp 1s;
+            font-weight: 900;
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.5);
+            letter-spacing: 2px;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s 0.2s backwards;
+            color: var(--rodalies-orange);
+            font-weight: 700;
         }
 
         .hero-content p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s 0.2s backwards;
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s 0.4s backwards;
+            opacity: 0.95;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s 0.6s backwards;
         }
 
         .btn {
-            padding: 1rem 2rem;
-            background: var(--secondary);
+            padding: 1.2rem 2.5rem;
+            background: var(--rodalies-red);
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: bold;
+            font-size: 1.1rem;
             transition: all 0.3s;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             border: none;
             cursor: pointer;
+            box-shadow: 0 8px 24px rgba(227, 6, 19, 0.4);
         }
 
         .btn:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: var(--rodalies-accent);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 32px rgba(227, 6, 19, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 3px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--rodalies-red);
+            border-color: white;
         }
 
         section {
-            padding: 5rem 2rem;
-            max-width: 1200px;
+            padding: 6rem 2rem;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .section-title {
-            font-size: 2.5rem;
+            font-size: 3rem;
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
             color: white;
+            font-weight: 900;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--rodalies-red), var(--rodalies-orange));
+            border-radius: 5px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #999;
+            font-size: 1.2rem;
+            margin-bottom: 4rem;
         }
 
         .cards-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
         }
 
         .card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s;
+            background: linear-gradient(145deg, var(--rodalies-gray), #252525);
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(227, 6, 19, 0.2);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--rodalies-red), var(--rodalies-orange));
         }
 
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 20px 60px rgba(227, 6, 19, 0.4);
+            border-color: var(--rodalies-red);
         }
 
         .card i {
-            font-size: 3rem;
-            color: var(--secondary);
-            margin-bottom: 1rem;
+            font-size: 3.5rem;
+            color: var(--rodalies-red);
+            margin-bottom: 1.5rem;
+            display: block;
         }
 
         .card h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 1rem;
-            color: var(--dark);
+            color: white;
+            font-weight: 700;
+        }
+
+        .card p {
+            color: #ccc;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-section {
+            background: var(--rodalies-gray);
+            border-radius: 30px;
+            padding: 4rem 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
 
         .social-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
             justify-content: center;
             flex-wrap: wrap;
         }
 
         .social-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.5rem;
-            transition: all 0.3s;
+            font-size: 2rem;
+            transition: all 0.4s;
             text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transform: translate(-50%, -50%);
+            transition: all 0.5s;
+        }
+
+        .social-btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .social-btn:hover {
-            transform: scale(1.2);
+            transform: translateY(-10px) scale(1.15);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
         }
 
-        .discord { background: #5865F2; }
-        .twitter { background: #1DA1F2; }
-        .youtube { background: #FF0000; }
-        .instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .discord { background: linear-gradient(135deg, #5865F2, #4752C4); }
+        .tiktok { background: linear-gradient(135deg, #000000, #69C9D0); }
+        .youtube { background: linear-gradient(135deg, #FF0000, #CC0000); }
+        .roblox { background: linear-gradient(135deg, #E31937, #A01323); }
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
         .gallery-item {
             position: relative;
             overflow: hidden;
-            border-radius: 15px;
-            height: 250px;
-            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            height: 300px;
+            background: linear-gradient(145deg, var(--rodalies-gray), #252525);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.2rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.4s;
+            border: 2px solid rgba(227, 6, 19, 0.3);
         }
 
         .gallery-item:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 20px 50px rgba(227, 6, 19, 0.5);
+            border-color: var(--rodalies-red);
+        }
+
+        .gallery-item i {
+            font-size: 4rem;
+            opacity: 0.3;
+        }
+
+        .gallery-item p {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(0deg, var(--rodalies-red), transparent);
+            padding: 2rem 1rem 1rem;
+            font-weight: 700;
+            font-size: 1.2rem;
         }
 
         .forum-list {
-            background: white;
-            border-radius: 15px;
+            background: var(--rodalies-gray);
+            border-radius: 20px;
             padding: 2rem;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
         }
 
         .forum-item {
-            padding: 1.5rem;
-            border-bottom: 1px solid #e2e8f0;
+            padding: 2rem;
+            border-bottom: 2px solid rgba(227, 6, 19, 0.2);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background 0.3s;
+            transition: all 0.3s;
+            border-radius: 10px;
         }
 
         .forum-item:hover {
-            background: #f8fafc;
+            background: rgba(227, 6, 19, 0.1);
+            transform: translateX(10px);
         }
 
         .forum-item:last-child {
             border-bottom: none;
         }
 
+        .forum-item h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .forum-item p {
+            color: #999;
+        }
+
+        .forum-item span {
+            color: var(--rodalies-red);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
         .contact-form {
-            background: white;
-            border-radius: 15px;
-            padding: 3rem;
-            max-width: 600px;
+            background: var(--rodalies-gray);
+            border-radius: 20px;
+            padding: 4rem;
+            max-width: 700px;
             margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            color: white;
+            font-size: 1.1rem;
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
+            padding: 1rem;
+            border: 2px solid rgba(227, 6, 19, 0.3);
+            border-radius: 12px;
             font-size: 1rem;
-            transition: border 0.3s;
+            background: var(--rodalies-dark);
+            color: white;
+            transition: all 0.3s;
         }
 
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: var(--secondary);
+            border-color: var(--rodalies-red);
+            box-shadow: 0 0 20px rgba(227, 6, 19, 0.3);
         }
 
         .form-group textarea {
             resize: vertical;
-            min-height: 150px;
+            min-height: 180px;
         }
 
         .admin-panel {
-            background: white;
-            border-radius: 15px;
-            padding: 3rem;
+            background: var(--rodalies-gray);
+            border-radius: 20px;
+            padding: 4rem;
             text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .admin-login h3 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .admin-login p {
+            color: #999;
         }
 
         .admin-login {
-            max-width: 400px;
+            max-width: 450px;
             margin: 0 auto;
         }
 
@@ -299,17 +512,32 @@
             display: block;
         }
 
+        .admin-content h3 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .admin-content p {
+            color: #999;
+        }
+
         footer {
-            background: var(--dark);
+            background: linear-gradient(135deg, var(--rodalies-dark), var(--rodalies-red));
             color: white;
             text-align: center;
-            padding: 2rem;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
             }
             to {
                 opacity: 1;
@@ -323,28 +551,49 @@
             }
 
             .hero-content h1 {
-                font-size: 2.5rem;
+                font-size: 3rem;
             }
 
-            .hero-content p {
-                font-size: 1.2rem;
+            .hero-content .subtitle {
+                font-size: 1.3rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
             }
         }
 
         .status {
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            font-size: 0.9rem;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-top: 1.5rem;
+            font-weight: 600;
         }
 
         .status.success {
-            background: #10b981;
+            background: linear-gradient(135deg, #10b981, #059669);
             color: white;
         }
 
         .status.error {
-            background: #ef4444;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
             color: white;
+        }
+
+        .feature-badge {
+            display: inline-block;
+            background: var(--rodalies-red);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-top: 1rem;
         }
     </style>
 </head>
@@ -357,7 +606,7 @@
             </a>
             <ul class="nav-links">
                 <li><a href="#home">Inicio</a></li>
-                <li><a href="#about">Sobre Nosotros</a></li>
+                <li><a href="#about">Características</a></li>
                 <li><a href="#gallery">Galería</a></li>
                 <li><a href="#forum">Foro</a></li>
                 <li><a href="#contact">Contacto</a></li>
@@ -369,138 +618,182 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <h1><i class="fas fa-train"></i> RodalieSim</h1>
-            <p>La experiencia definitiva de simulación ferroviaria</p>
-            <a href="#about" class="btn">Descubre Más</a>
+            <p class="subtitle">RDS Studios</p>
+            <p>La experiencia más realista de simulación de Rodalies de Catalunya en Roblox</p>
+            <div class="hero-buttons">
+                <a href="https://www.roblox.com/es/games/81674816864315/RodalieSim-RDS-Showcase" target="_blank" class="btn">
+                    <i class="fas fa-gamepad"></i> Jugar Ahora
+                </a>
+                <a href="https://discord.gg/vJjSSTkN9F" target="_blank" class="btn btn-secondary">
+                    <i class="fab fa-discord"></i> Únete al Discord
+                </a>
+            </div>
         </div>
     </section>
 
     <section id="about">
-        <h2 class="section-title">Únete a Nuestra Comunidad</h2>
+        <h2 class="section-title">¿Por qué RodalieSim?</h2>
+        <p class="section-subtitle">La simulación ferroviaria más completa de Rodalies</p>
         <div class="cards-container">
             <div class="card">
-                <i class="fas fa-gamepad"></i>
-                <h3>Juega Ahora</h3>
-                <p>Experimenta la simulación más realista de trenes de cercanías. Conduce, gestiona y disfruta.</p>
-                <a href="#" class="btn" style="margin-top: 1rem;">Jugar</a>
+                <i class="fas fa-train-subway"></i>
+                <h3>Simulación Realista</h3>
+                <p>Conduce trenes de Rodalies con física y mecánicas ultra realistas. Cada detalle cuenta para una experiencia inmersiva.</p>
+                <span class="feature-badge">ULTRA REALISTA</span>
+            </div>
+            <div class="card">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>Rutas Auténticas</h3>
+                <p>Recorre las líneas reales de Rodalies de Catalunya con estaciones detalladas y paisajes fieles a la realidad.</p>
+                <span class="feature-badge">LÍNEAS REALES</span>
             </div>
             <div class="card">
                 <i class="fas fa-users"></i>
-                <h3>Comunidad</h3>
-                <p>Únete a miles de jugadores apasionados por los trenes y la simulación ferroviaria.</p>
-                <a href="#forum" class="btn" style="margin-top: 1rem;">Ver Foro</a>
-            </div>
-            <div class="card">
-                <i class="fab fa-discord"></i>
-                <h3>Discord</h3>
-                <p>Chatea con otros jugadores, participa en eventos y mantente actualizado en tiempo real.</p>
-                <a href="#" class="btn" style="margin-top: 1rem;">Unirse</a>
+                <h3>Comunidad Activa</h3>
+                <p>Únete a miles de jugadores apasionados. Participa en eventos, competiciones y disfruta de actualizaciones constantes.</p>
+                <span class="feature-badge">+1000 MIEMBROS</span>
             </div>
         </div>
     </section>
 
-    <section id="social">
-        <h2 class="section-title">Síguenos en Redes Sociales</h2>
-        <div class="social-links">
-            <a href="#" class="social-btn discord" title="Discord">
-                <i class="fab fa-discord"></i>
-            </a>
-            <a href="#" class="social-btn twitter" title="Twitter">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" class="social-btn youtube" title="YouTube">
-                <i class="fab fa-youtube"></i>
-            </a>
-            <a href="#" class="social-btn instagram" title="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
+    <section id="links">
+        <div class="social-section">
+            <h2 class="section-title">Únete a Nuestra Comunidad</h2>
+            <p class="section-subtitle">Síguenos en todas nuestras plataformas</p>
+            <div class="social-links">
+                <a href="https://discord.gg/vJjSSTkN9F" target="_blank" class="social-btn discord" title="Discord">
+                    <i class="fab fa-discord"></i>
+                </a>
+                <a href="https://www.roblox.com/es/communities/35610170/RodalieSim-RDS-Studios#!/about" target="_blank" class="social-btn roblox" title="Comunidad Roblox">
+                    <i class="fab fa-r"></i>
+                </a>
+                <a href="https://www.youtube.com/@RDSStudios14" target="_blank" class="social-btn youtube" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.tiktok.com/@rds_rds4" target="_blank" class="social-btn tiktok" title="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+            <div class="cards-container" style="margin-top: 3rem;">
+                <div class="card">
+                    <i class="fab fa-discord"></i>
+                    <h3>Discord Oficial</h3>
+                    <p>Chatea en tiempo real con la comunidad, participa en eventos exclusivos y mantente al día con todas las novedades.</p>
+                    <a href="https://discord.gg/vJjSSTkN9F" target="_blank" class="btn" style="margin-top: 1rem;">Unirse</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Jugar en Roblox</h3>
+                    <p>Accede al juego oficial de RodalieSim en Roblox. ¡Empieza tu carrera como conductor profesional ahora!</p>
+                    <a href="https://www.roblox.com/es/games/81674816864315/RodalieSim-RDS-Showcase" target="_blank" class="btn" style="margin-top: 1rem;">Jugar</a>
+                </div>
+                <div class="card">
+                    <i class="fab fa-youtube"></i>
+                    <h3>Canal de YouTube</h3>
+                    <p>Tutoriales, gameplays, actualizaciones y contenido exclusivo. ¡Suscríbete para no perderte nada!</p>
+                    <a href="https://www.youtube.com/@RDSStudios14" target="_blank" class="btn" style="margin-top: 1rem;">Ver Canal</a>
+                </div>
+            </div>
         </div>
     </section>
 
     <section id="gallery">
         <h2 class="section-title">Galería</h2>
+        <p class="section-subtitle">Descubre la belleza de la simulación</p>
         <div class="gallery">
             <div class="gallery-item">
-                <i class="fas fa-image" style="font-size: 3rem;"></i>
-                <p style="position: absolute; bottom: 20px;">Imagen 1</p>
+                <i class="fas fa-image"></i>
+                <p>Estación de Sants</p>
             </div>
             <div class="gallery-item">
-                <i class="fas fa-image" style="font-size: 3rem;"></i>
-                <p style="position: absolute; bottom: 20px;">Imagen 2</p>
+                <i class="fas fa-image"></i>
+                <p>Interior del Tren</p>
             </div>
             <div class="gallery-item">
-                <i class="fas fa-image" style="font-size: 3rem;"></i>
-                <p style="position: absolute; bottom: 20px;">Imagen 3</p>
+                <i class="fas fa-image"></i>
+                <p>Vista Panorámica</p>
             </div>
             <div class="gallery-item">
-                <i class="fas fa-image" style="font-size: 3rem;"></i>
-                <p style="position: absolute; bottom: 20px;">Imagen 4</p>
+                <i class="fas fa-image"></i>
+                <p>Cabina del Conductor</p>
             </div>
             <div class="gallery-item">
-                <i class="fas fa-image" style="font-size: 3rem;"></i>
-                <p style="position: absolute; bottom: 20px;">Imagen 5</p>
+                <i class="fas fa-image"></i>
+                <p>Línea R2 Nord</p>
             </div>
             <div class="gallery-item">
-                <i class="fas fa-image" style="font-size: 3rem;"></i>
-                <p style="position: absolute; bottom: 20px;">Imagen 6</p>
+                <i class="fas fa-image"></i>
+                <p>Atardecer en Vías</p>
             </div>
         </div>
     </section>
 
     <section id="forum">
         <h2 class="section-title">Foro de la Comunidad</h2>
+        <p class="section-subtitle">Comparte, discute y conecta con otros jugadores</p>
         <div class="forum-list">
             <div class="forum-item">
                 <div>
-                    <h3><i class="fas fa-comments"></i> Anuncios Generales</h3>
-                    <p>Noticias y actualizaciones oficiales</p>
+                    <h3><i class="fas fa-bullhorn"></i> Anuncios Oficiales</h3>
+                    <p>Actualizaciones, novedades y comunicados de RDS Studios</p>
                 </div>
-                <span>124 mensajes</span>
+                <span>87 mensajes</span>
             </div>
             <div class="forum-item">
                 <div>
-                    <h3><i class="fas fa-question-circle"></i> Soporte Técnico</h3>
-                    <p>Resuelve tus dudas y problemas</p>
+                    <h3><i class="fas fa-wrench"></i> Soporte Técnico</h3>
+                    <p>¿Problemas con el juego? Te ayudamos aquí</p>
                 </div>
-                <span>89 mensajes</span>
+                <span>142 mensajes</span>
             </div>
             <div class="forum-item">
                 <div>
                     <h3><i class="fas fa-lightbulb"></i> Sugerencias</h3>
-                    <p>Comparte tus ideas para mejorar el juego</p>
+                    <p>Comparte tus ideas para mejorar RodalieSim</p>
                 </div>
-                <span>203 mensajes</span>
+                <span>234 mensajes</span>
             </div>
             <div class="forum-item">
                 <div>
-                    <h3><i class="fas fa-trophy"></i> Logros y Compartir</h3>
-                    <p>Muestra tus mejores momentos</p>
+                    <h3><i class="fas fa-star"></i> Logros y Experiencias</h3>
+                    <p>Muestra tus mejores momentos como conductor</p>
                 </div>
-                <span>156 mensajes</span>
+                <span>189 mensajes</span>
+            </div>
+            <div class="forum-item">
+                <div>
+                    <h3><i class="fas fa-comments"></i> Charla General</h3>
+                    <p>Conversaciones sobre trenes, simulación y más</p>
+                </div>
+                <span>412 mensajes</span>
             </div>
         </div>
     </section>
 
     <section id="contact">
-        <h2 class="section-title">Contáctanos</h2>
+        <h2 class="section-title">Contacto</h2>
+        <p class="section-subtitle">¿Tienes preguntas? Estamos aquí para ayudarte</p>
         <div class="contact-form">
             <form id="contactForm">
                 <div class="form-group">
-                    <label for="name">Nombre</label>
-                    <input type="text" id="name" name="name" required>
+                    <label for="name"><i class="fas fa-user"></i> Nombre</label>
+                    <input type="text" id="name" name="name" placeholder="Tu nombre" required>
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="email" name="email" placeholder="tu@email.com" required>
                 </div>
                 <div class="form-group">
-                    <label for="subject">Asunto</label>
-                    <input type="text" id="subject" name="subject" required>
+                    <label for="subject"><i class="fas fa-tag"></i> Asunto</label>
+                    <input type="text" id="subject" name="subject" placeholder="¿En qué podemos ayudarte?" required>
                 </div>
                 <div class="form-group">
-                    <label for="message">Mensaje</label>
-                    <textarea id="message" name="message" required></textarea>
+                    <label for="message"><i class="fas fa-comment-dots"></i> Mensaje</label>
+                    <textarea id="message" name="message" placeholder="Escribe tu mensaje aquí..." required></textarea>
                 </div>
-                <button type="submit" class="btn" style="width: 100%;">Enviar Mensaje</button>
+                <button type="submit" class="btn" style="width: 100%;">
+                    <i class="fas fa-paper-plane"></i> Enviar Mensaje
+                </button>
             </form>
             <div id="formStatus"></div>
         </div>
@@ -508,108 +801,24 @@
 
     <section id="admin">
         <h2 class="section-title">Panel de Administración</h2>
+        <p class="section-subtitle">Acceso exclusivo para el equipo</p>
         <div class="admin-panel">
             <div class="admin-login" id="adminLogin">
-                <h3>Acceso Restringido</h3>
-                <p style="margin: 1rem 0;">Solo personal autorizado</p>
+                <i class="fas fa-shield-alt" style="font-size: 4rem; color: var(--rodalies-red); margin-bottom: 1rem;"></i>
+                <h3>Área Restringida</h3>
+                <p style="margin: 1rem 0 2rem;">Solo personal autorizado de RDS Studios</p>
                 <div class="form-group">
-                    <label for="adminUser">Usuario</label>
-                    <input type="text" id="adminUser" placeholder="Nombre de usuario">
+                    <label for="adminUser"><i class="fas fa-user-shield"></i> Usuario Administrativo</label>
+                    <input type="text" id="adminUser" placeholder="Usuario">
                 </div>
                 <div class="form-group">
-                    <label for="adminPass">Contraseña</label>
+                    <label for="adminPass"><i class="fas fa-lock"></i> Contraseña</label>
                     <input type="password" id="adminPass" placeholder="Contraseña">
                 </div>
-                <button class="btn" onclick="adminLogin()">Iniciar Sesión</button>
+                <button class="btn" onclick="adminLogin()" style="width: 100%;">
+                    <i class="fas fa-sign-in-alt"></i> Acceder al Panel
+                </button>
                 <div id="adminStatus"></div>
             </div>
             <div class="admin-content" id="adminContent">
-                <h3>Bienvenido, Administrador</h3>
-                <p style="margin: 1rem 0;">Panel de control del sistema</p>
-                <div class="cards-container" style="margin-top: 2rem;">
-                    <div class="card">
-                        <i class="fas fa-users"></i>
-                        <h3>Usuarios</h3>
-                        <p>1,234 usuarios activos</p>
-                    </div>
-                    <div class="card">
-                        <i class="fas fa-chart-line"></i>
-                        <h3>Estadísticas</h3>
-                        <p>Ver métricas del sistema</p>
-                    </div>
-                    <div class="card">
-                        <i class="fas fa-cog"></i>
-                        <h3>Configuración</h3>
-                        <p>Ajustes del servidor</p>
-                    </div>
-                </div>
-                <button class="btn" onclick="adminLogout()" style="margin-top: 2rem;">Cerrar Sesión</button>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 RodalieSim - RDS Studios. Todos los derechos reservados.</p>
-        <p style="margin-top: 0.5rem;">Contacto: rdsstudios7@gmail.com</p>
-    </footer>
-
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value
-            };
-            
-            const mailtoLink = `mailto:rdsstudios7@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent('Nombre: ' + formData.name + '\nEmail: ' + formData.email + '\n\nMensaje:\n' + formData.message)}`;
-            
-            window.location.href = mailtoLink;
-            
-            document.getElementById('formStatus').innerHTML = '<p class="status success" style="margin-top: 1rem;">Abriendo cliente de correo...</p>';
-            
-            setTimeout(() => {
-                this.reset();
-                document.getElementById('formStatus').innerHTML = '';
-            }, 3000);
-        });
-
-        function adminLogin() {
-            const user = document.getElementById('adminUser').value;
-            const pass = document.getElementById('adminPass').value;
-            
-            if (user === 'admin' && pass === 'admin123') {
-                document.getElementById('adminLogin').style.display = 'none';
-                document.getElementById('adminContent').classList.add('active');
-            } else {
-                document.getElementById('adminStatus').innerHTML = '<p class="status error" style="margin-top: 1rem;">Credenciales incorrectas</p>';
-                setTimeout(() => {
-                    document.getElementById('adminStatus').innerHTML = '';
-                }, 3000);
-            }
-        }
-
-        function adminLogout() {
-            document.getElementById('adminLogin').style.display = 'block';
-            document.getElementById('adminContent').classList.remove('active');
-            document.getElementById('adminUser').value = '';
-            document.getElementById('adminPass').value = '';
-        }
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+                <i class="fas fa-check
